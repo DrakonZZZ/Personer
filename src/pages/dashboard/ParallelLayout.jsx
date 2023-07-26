@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { styled } from 'styled-components';
 
 const StyledParallel = styled.main`
+  background-color: var(--primary-3);
+  height: 100vh;
   .dashboard {
     display: grid;
     grid-template-columns: 1fr;
@@ -14,6 +16,7 @@ const StyledParallel = styled.main`
   }
 
   @media (min-width: 992px) {
+    background-color: var(--primary-3);
     .dashboard {
       grid-template-columns: 1fr auto;
     }

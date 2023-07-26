@@ -20,6 +20,8 @@ const StyleSecBar = styled.section`
       height: 100%;
       width: 300px;
       margin-right: -300px;
+      border-left: 2px solid var(--primary-3);
+      border-right: 2px solid var(--primary-3);
       transition: var(--transition);
     }
     .content {
