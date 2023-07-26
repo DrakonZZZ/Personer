@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Logo, Footer, FromSec } from '../components';
+import { Logo, Footer, FormSec } from '../components';
 import { styled } from 'styled-components';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { store } from '../store';
 import { loginUser, registerUser } from '../../features/users/userSlice';
 import { useNavigate } from 'react-router-dom';
 
@@ -89,7 +88,7 @@ const Register = () => {
     if (userInfo) {
       navigator('/dashboard');
     }
-  }, [userInfo]);
+  }, [userInfo, navigator]);
 
   const handleChange = (e) => {
     const name = e.target.name;
@@ -113,6 +112,7 @@ const Register = () => {
     }
     dispatch(registerUser({ name, email, password }));
   };
+
   return (
     <>
       <StyledRegister>
@@ -121,7 +121,7 @@ const Register = () => {
             <Logo className="logo-center" />
             <h3>{value.activeMember ? 'Login' : 'Sign-up'}</h3>
             {!value.activeMember && (
-              <FromSec
+              <FormSec
                 type="text"
                 name="name"
                 value={value.name}
@@ -129,14 +129,14 @@ const Register = () => {
                 lableText="name"
               />
             )}
-            <FromSec
+            <FormSec
               type="email"
               name="email"
               value={value.email}
               handleChange={handleChange}
               lableText="email"
             />
-            <FromSec
+            <FormSec
               type="password"
               name="password"
               value={value.password}

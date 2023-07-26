@@ -1,10 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import endPoint from '../../utils/axios';
-import { getDataFromSession, addDataToSession } from '../../utils/session';
+import {
+  getDataFromSession,
+  addDataToSession,
+  clearFromSession,
+} from '../../utils/session';
 import { toast } from 'react-toastify';
 
 const initialState = {
   isLoading: false,
+  isSidebarOpen: false,
   userInfo: getDataFromSession(),
 };
 
@@ -26,7 +31,6 @@ export const loginUser = createAsyncThunk(
   async (user, thunkPoint) => {
     try {
       const res = await endPoint.post('/auth/login', user);
-      console.log(res.data);
       return res.data;
     } catch (error) {
       return thunkPoint.rejectWithValue(error.response.data.msg);
@@ -37,6 +41,16 @@ export const loginUser = createAsyncThunk(
 const userSlice = createSlice({
   name: 'user',
   initialState,
+  reducers: {
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen;
+    },
+    logout: (state) => {
+      state.userInfo = null;
+      clearFromSession();
+      state.isSidebarOpen = false;
+    },
+  },
   extraReducers: {
     [registerUser.pending]: (state) => {
       state.isLoading = true;
@@ -69,4 +83,5 @@ const userSlice = createSlice({
   },
 });
 
+export const { toggleSidebar, logout } = userSlice.actions;
 export default userSlice.reducer;

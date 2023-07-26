@@ -1,6 +1,6 @@
 import Home from './Homepage';
-import Dashboard from './Dashboard';
 import Register from './Register';
 import ErrorPage from './Error';
+import PrivateRoute from './PrivateRoute';
 
-export { Home, Dashboard, Register, ErrorPage };
+export { Home, Register, ErrorPage, PrivateRoute };

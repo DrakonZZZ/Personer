@@ -1,6 +1,14 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { Home, Dashboard, Register, ErrorPage } from '.';
-import { ToastContainer, Zoom } from 'react-toastify';
+import { Home, Register, ErrorPage, PrivateRoute } from '.';
+import {
+  AddQuest,
+  AllQuests,
+  Profile,
+  Stats,
+  ParallelLayout,
+} from './dashboard';
+
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const Layout = () => {
@@ -9,7 +17,20 @@ const Layout = () => {
       <Router>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/dashboard" element={<Dashboard />} />
+
+          <Route
+            path="/dashboard"
+            element={
+              <PrivateRoute>
+                <ParallelLayout />
+              </PrivateRoute>
+            }
+          >
+            <Route index element={<Stats />} />
+            <Route path="profile" element={<Profile />} />
+            <Route path="add-quest" element={<AddQuest />} />
+            <Route path="all-quests" element={<AllQuests />} />
+          </Route>
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<ErrorPage />} />
         </Routes>

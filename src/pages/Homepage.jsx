@@ -103,6 +103,10 @@ const StyledHome = styled.main`
 `;
 
 const Homepage = () => {
+  console.log(
+    "%cHmm aren't you are curious one",
+    'color: black; font-size:36px;background: yellow;font-family:cursive'
+  );
   return (
     <StyledHome>
       <div className=" page">

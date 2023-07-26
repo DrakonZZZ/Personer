@@ -1,6 +1,6 @@
 import React from 'react';
 
-const FromSec = ({ type, name, value, handleChange, lableText }) => {
+const FormSec = ({ type, name, value, handleChange, lableText }) => {
   return (
     <div className="form-row">
       <label htmlFor={name} className="form-label">
@@ -17,4 +17,4 @@ const FromSec = ({ type, name, value, handleChange, lableText }) => {
   );
 };
 
-export default FromSec;
+export default FormSec;
