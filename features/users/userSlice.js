@@ -38,6 +38,22 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  'user/updateUser',
+  async (user, thunkPoint) => {
+    try {
+      const res = await endPoint.patch('/auth/updateUser', user, {
+        headers: {
+          Authorization: `Bearer ${thunkPoint.getState().user.userInfo.token}`,
+        },
+      });
+      return res.data;
+    } catch (error) {
+      return thunkPoint.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -77,6 +93,21 @@ const userSlice = createSlice({
       toast.success(`Welcome back 🙂, ${user.name}`);
     },
     [loginUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast(payload);
+    },
+    [updateUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [updateUser.fulfilled]: (state, { payload }) => {
+      const { user } = payload;
+      state.isLoading = false;
+      state.user = user;
+
+      addDataToSession(user);
+      toast.success('Your Profile has been updated!');
+    },
+    [updateUser.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast(payload);
     },

@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FormSec } from '../../components';
 import { styled } from 'styled-components';
 import { useState } from 'react';
+import { updateUser } from '../../../features/users/userSlice';
 
 export const StyledInterface = styled.main`
   border: 4px solid var(--primary-2);
@@ -84,54 +85,57 @@ const Profile = () => {
   const [userData, setUserdata] = useState({
     name: userInfo?.name || '',
     email: userInfo?.email || '',
-    last: userInfo?.lastName || '',
-    loc: userInfo?.location || '',
+    lastName: userInfo?.lastName || '',
+    location: userInfo?.location || '',
   });
 
-  const { name, email, last, loc } = userData;
+  const { name, email, lastName, location } = userData;
 
-  const submitHandler = (e) => {
-    e.preventdefault();
-    if (!name || !email || !last || !loc) {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!name || !email || !lastName || !location) {
       console.log('please fill out all fields');
       return;
     }
+    dispatch(updateUser({ name, lastName, email, location }));
   };
-  const changeHandler = (e) => {
+
+  const handleChange = (e) => {
+    console.log(e.target.name, e.target.value);
     setUserdata({ ...userData, [e.target.name]: e.target.value });
   };
   return (
     <StyledInterface>
-      <form onSubmit={submitHandler} className="form">
-        <h3>Profile</h3>
+      <form className="form" onSubmit={handleSubmit}>
+        <h3>profile</h3>
         <div className="form-center">
           <FormSec
             type="text"
             name="name"
-            value={name}
-            handleChange={changeHandler}
+            value={userData.name}
+            handleChange={handleChange}
           />
           <FormSec
             type="text"
-            lableText="last name"
-            name="last"
-            value={last}
-            handleChange={changeHandler}
-          />
-          <FormSec
-            type="text"
-            name="location"
-            value={loc}
-            handleChange={changeHandler}
+            labelText="last name"
+            name="lastName"
+            value={userData.lastName}
+            handleChange={handleChange}
           />
           <FormSec
             type="email"
             name="email"
-            value={email}
-            handleChange={changeHandler}
+            value={userData.email}
+            handleChange={handleChange}
+          />
+          <FormSec
+            type="text"
+            name="location"
+            value={userData.location}
+            handleChange={handleChange}
           />
           <button type="submit" className="btn btn-block" disabled={isLoading}>
-            {isLoading ? 'Updating...' : 'Update'}
+            {isLoading ? 'Please Wait...' : 'save changes'}
           </button>
         </div>
       </form>

@@ -120,7 +120,7 @@ const Nav = () => {
             <FaUserCircle />
           </button>
           <div className={`dropdown ${logoutDisplay ? 'show-dropdown' : ''}`}>
-            <div className="border">Drak</div>
+            <div className="border">{userInfo?.name}</div>
             <button
               type="button"
               className="dropdown-btn"
