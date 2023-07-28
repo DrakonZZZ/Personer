@@ -641,6 +641,10 @@ ul {
   height: 35px;
 }
 
+option:hover {
+  background-color: var(--primary-2);
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:focus {
   transition: background-color 600000s 0s, color 600000s 0s;

@@ -1,5 +1,3 @@
-import React from 'react';
-
 const FormSec = ({ type, name, value, handleChange, lableText }) => {
   return (
     <div className="form-row">

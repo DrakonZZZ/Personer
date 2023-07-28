@@ -11,6 +11,7 @@ export const StyledInterface = styled.main`
   padding: 3rem 2rem 4rem;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px,
     rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
   h3 {
     margin-top: 0;
   }
@@ -45,11 +46,12 @@ export const StyledInterface = styled.main`
     }
   }
   .clear-btn {
-    background: var(--grey-500);
+    background: var(--primary-7);
   }
   .clear-btn:hover {
-    background: var(--black);
+    background: var(--primary-6);
   }
+
   @media (min-width: 992px) {
     border-radius: 8px;
     .form-center {

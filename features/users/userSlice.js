@@ -1,11 +1,15 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import endPoint from '../../utils/axios';
 import {
   getDataFromSession,
   addDataToSession,
   clearFromSession,
 } from '../../utils/session';
 import { toast } from 'react-toastify';
+import {
+  loginUserThunk,
+  registerUserThunk,
+  updateUserThunk,
+} from './userAction';
 
 const initialState = {
   isLoading: false,
@@ -16,41 +20,21 @@ const initialState = {
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (user, thunkPoint) => {
-    try {
-      const res = await endPoint.post('/auth/register', user);
-      console.log(res.data);
-      return res.data;
-    } catch (error) {
-      return thunkPoint.rejectWithValue(error.response.data.msg);
-    }
+    return registerUserThunk(user, thunkPoint);
   }
 );
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async (user, thunkPoint) => {
-    try {
-      const res = await endPoint.post('/auth/login', user);
-      return res.data;
-    } catch (error) {
-      return thunkPoint.rejectWithValue(error.response.data.msg);
-    }
+    return loginUserThunk(user, thunkPoint);
   }
 );
 
 export const updateUser = createAsyncThunk(
   'user/updateUser',
   async (user, thunkPoint) => {
-    try {
-      const res = await endPoint.patch('/auth/updateUser', user, {
-        headers: {
-          Authorization: `Bearer ${thunkPoint.getState().user.userInfo.token}`,
-        },
-      });
-      return res.data;
-    } catch (error) {
-      return thunkPoint.rejectWithValue(error.response.data.msg);
-    }
+    return updateUserThunk(user, thunkPoint);
   }
 );
 
