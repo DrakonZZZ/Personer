@@ -124,7 +124,9 @@ const Nav = () => {
             <button
               type="button"
               className="dropdown-btn"
-              onClick={() => dispatch(logout())}
+              onClick={() =>
+                dispatch(logout(`Logging you out ${userInfo?.name}`))
+              }
             >
               Logout
             </button>

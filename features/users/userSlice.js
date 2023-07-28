@@ -45,10 +45,13 @@ const userSlice = createSlice({
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
-    logout: (state) => {
+    logout: (state, { payload }) => {
       state.userInfo = null;
-      clearFromSession();
       state.isSidebarOpen = false;
+      if (payload) {
+        toast(payload);
+      }
+      clearFromSession();
     },
   },
   extraReducers: {

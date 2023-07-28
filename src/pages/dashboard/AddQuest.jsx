@@ -1,10 +1,14 @@
 import { FormSec } from '../../components';
 import { useSelector, useDispatch } from 'react-redux';
-import { styled } from 'styled-components';
 import { StyledInterface } from './Profile';
 import { toast } from 'react-toastify';
 import FormSelect from '../../components/FormSelect';
-import { handleChange } from '../../../features/quests/questSlice';
+import {
+  changeStateValue,
+  clearStateValue,
+  addQuest,
+} from '../../../features/quests/questSlice';
+import { useEffect } from 'react';
 
 const AddQuest = () => {
   const {
@@ -22,6 +26,8 @@ const AddQuest = () => {
 
   const dispatch = useDispatch();
 
+  const { userInfo } = useSelector((store) => store.user);
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -29,12 +35,21 @@ const AddQuest = () => {
       toast('Please fill out all the fields');
       return;
     }
-  };
-  const inputHandler = (e) => {
-    console.log(e.target.name, e.target.value);
-    dispatch(handleChange(e.target.name, e.target.value));
+    dispatch(addQuest({ position, company, jobLocation, jobType, status }));
   };
 
+  const inputHandler = (e) => {
+    dispatch(changeStateValue({ name: e.target.name, value: e.target.value }));
+  };
+
+  useEffect(() => {
+    dispatch(
+      changeStateValue({
+        name: 'jobLocation',
+        value: userInfo.location,
+      })
+    );
+  }, []);
   return (
     <StyledInterface>
       <form className="form" onSubmit={submitHandler}>
@@ -77,7 +92,7 @@ const AddQuest = () => {
             <button
               type="button"
               className="btn btn-block clear-btn"
-              onClick={() => console.log('clear')}
+              onClick={() => dispatch(clearStateValue())}
             >
               Clear
             </button>
