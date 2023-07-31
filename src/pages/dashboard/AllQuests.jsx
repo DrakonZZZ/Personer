@@ -1,7 +1,12 @@
-import React from 'react';
+import { QuestContainer, SearchContainer } from '../../components';
 
 const AllQuests = () => {
-  return <div>AllQuests</div>;
+  return (
+    <>
+      <SearchContainer />
+      <QuestContainer />
+    </>
+  );
 };
 
 export default AllQuests;

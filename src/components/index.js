@@ -5,6 +5,8 @@ import PrimarySidebar from './PrimarySidebar';
 import SecondarySidebar from './SecondarySidebar';
 import Nav from './Nav';
 import Navlinks from './Navlinks';
+import QuestContainer from './QuestContainer';
+import SearchContainer from './SearchContainer';
 
 export {
   Logo,
@@ -14,4 +16,6 @@ export {
   PrimarySidebar,
   SecondarySidebar,
   Navlinks,
+  QuestContainer,
+  SearchContainer,
 };
