@@ -86,6 +86,7 @@ const StyledNav = styled.nav`
   @media (min-width: 992px) {
     position: sticky;
     top: 0;
+    z-index: 99;
     .nav-center {
       width: 90%;
     }

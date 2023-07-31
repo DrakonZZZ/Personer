@@ -7,6 +7,7 @@ import {
   changeStateValue,
   clearStateValue,
   addQuest,
+  editQuestData,
 } from '../../../features/quests/questSlice';
 import { useEffect } from 'react';
 
@@ -31,11 +32,21 @@ const AddQuest = () => {
   const submitHandler = (e) => {
     e.preventDefault();
 
+    const questData = { position, company, jobLocation, jobType, status };
     if (!location || !position || !company) {
       toast('Please fill out all the fields');
       return;
     }
-    dispatch(addQuest({ position, company, jobLocation, jobType, status }));
+    if (isEditing) {
+      dispatch(
+        editQuestData({
+          jobId: editJobId,
+          job: questData,
+        })
+      );
+      return;
+    }
+    dispatch(addQuest(questData));
   };
 
   const inputHandler = (e) => {
@@ -43,12 +54,16 @@ const AddQuest = () => {
   };
 
   useEffect(() => {
-    dispatch(
-      changeStateValue({
-        name: 'jobLocation',
-        value: userInfo.location,
-      })
-    );
+    if (!isEditing) {
+      dispatch(
+        dispatch(
+          changeStateValue({
+            name: 'jobLocation',
+            value: userInfo.location,
+          })
+        )
+      );
+    }
   }, []);
   return (
     <StyledInterface>

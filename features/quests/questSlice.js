@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import endPoint from '../../utils/axios';
 import { getDataFromSession } from '../../utils/session';
-import { logout } from '../users/userSlice';
+import { addQuestThunk, deleteQuestThunk, editQuestThunk } from './questAction';
+
 import { toast } from 'react-toastify';
 
 const initialState = {
@@ -12,33 +12,16 @@ const initialState = {
   position: '',
   company: '',
   jobLocation: '',
-  editJobId: '',
+  editQuestId: '',
   isEditing: false,
   isLoading: false,
 };
 
-export const addQuest = createAsyncThunk(
-  'job/createJob',
-  async (quest, thunkPoint) => {
-    try {
-      const res = await endPoint.post('/jobs', quest, {
-        headers: {
-          Authorization: `Bearer ${thunkPoint.getState().user.userInfo.token}`,
-        },
-      });
-      thunkPoint.dispatch(clearStateValue);
-      return res.data;
-    } catch (error) {
-      if (error.response.status === 401) {
-        thunkPoint.dispatch(logout());
-        return thunkPoint.rejectWithValue(
-          'You are Unauthorized to use this account'
-        );
-      }
-      thunkPoint.rejectWithValue(error.response.date.msg);
-    }
-  }
-);
+export const addQuest = createAsyncThunk('job/createJob', addQuestThunk);
+
+export const deleteQuest = createAsyncThunk('job/deleteJob', deleteQuestThunk);
+
+export const editQuestData = createAsyncThunk('job/editJob', editQuestThunk);
 
 const questSlice = createSlice({
   name: 'quest',
@@ -55,13 +38,15 @@ const questSlice = createSlice({
         jobLocation: getDataFromSession()?.location || '',
       };
     },
+    editQuest: (state, { payload }) => {
+      return { ...state, isEditing: true, ...payload };
+    },
   },
   extraReducers: {
     [addQuest.pending]: (state) => {
       state.isLoading = true;
     },
     [addQuest.fulfilled]: (state) => {
-      console.log('working');
       state.isLoading = false;
       toast.success('Quest Created!');
     },
@@ -69,8 +54,26 @@ const questSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
+    [deleteQuest.fulfilled]: (state) => {
+      toast.success('Quest deleted');
+    },
+    [deleteQuest.rejected]: (state, { payload }) => {
+      toast(payload);
+    },
+    [editQuestData.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editQuestData.fulfilled]: (state) => {
+      state.isLoading = false;
+      toast.success('Quest Updated!');
+    },
+    [editQuestData.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
+    },
   },
 });
 
-export const { changeStateValue, clearStateValue } = questSlice.actions;
+export const { changeStateValue, clearStateValue, editQuest } =
+  questSlice.actions;
 export default questSlice.reducer;

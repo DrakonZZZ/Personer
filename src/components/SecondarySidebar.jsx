@@ -9,12 +9,7 @@ const StyleSecBar = styled.section`
   overflow: hidden;
   @media (min-width: 992px) {
     display: block;
-    background-image: radial-gradient(#f7ff11 0.8px, transparent 0.8px),
-      radial-gradient(#f7ff11 0.8px, #222 0.8px);
-    background-size: 32px 32px;
-    background-position: 0 0, 16px 16px;
-    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
-      rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    overflow: clip;
     .sidebar-container {
       min-height: 100vh;
       height: 100%;
@@ -23,6 +18,13 @@ const StyleSecBar = styled.section`
       border-left: 2px solid var(--primary-3);
       border-right: 2px solid var(--primary-3);
       transition: var(--transition);
+      background-image: radial-gradient(#f7ff11 0.8px, transparent 0.8px),
+        radial-gradient(#f7ff11 0.8px, #222 0.8px);
+      background-size: 32px 32px;
+      background-position: 0 0, 16px 16px;
+      box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px,
+        rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+      background-attachment: fixed;
     }
     .content {
       position: sticky;
