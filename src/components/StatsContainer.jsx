@@ -4,7 +4,6 @@ import { BiTime } from 'react-icons/bi';
 import { GoDiscussionOutdated } from 'react-icons/go';
 import { FaBookDead } from 'react-icons/fa';
 import StatItem from './StatItem';
-import Chart from './Chart';
 
 const StyledStatContainer = styled.section`
   display: grid;

@@ -10,7 +10,8 @@ import SearchContainer from './SearchContainer';
 import Loading from './Loading';
 import GraphContainer from './GraphContainer';
 import StatsContainer from './StatsContainer';
-import Chart from './Chart';
+import AreaChart from './AreaChart';
+import GraphChart from './GraphChart';
 
 export {
   Logo,
@@ -25,5 +26,6 @@ export {
   Loading,
   StatsContainer,
   GraphContainer,
-  Chart,
+  AreaChart,
+  GraphChart,
 };
