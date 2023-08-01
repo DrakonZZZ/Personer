@@ -48,7 +48,7 @@ const GraphContainer = () => {
 
   return (
     <StyledGraphContainer>
-      <h4>Montly Quest Registration</h4>
+      <h4>Monthly Quest Registration</h4>
       <div className="graph-btns">
         <button
           type="button"

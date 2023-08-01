@@ -1,6 +1,7 @@
 import Logo from './Logo';
 import Footer from './Footer';
 import FormSec from './FormSec';
+import FormSelect from './FormSelect';
 import PrimarySidebar from './PrimarySidebar';
 import SecondarySidebar from './SecondarySidebar';
 import Nav from './Nav';
@@ -17,6 +18,7 @@ export {
   Logo,
   Footer,
   FormSec,
+  FormSelect,
   Nav,
   PrimarySidebar,
   SecondarySidebar,

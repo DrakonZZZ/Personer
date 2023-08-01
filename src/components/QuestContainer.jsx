@@ -22,8 +22,29 @@ const StyledQuestContainer = styled.section`
     justify-content: center;
     text-align: center;
   }
-  & > h5 {
-    font-weight: 700;
+  h4.line {
+    position: relative;
+    z-index: 1;
+    font-weight: 600;
+    text-align: center;
+    color: var(--primary-6);
+    :before {
+      border-top: 3px solid var(--primary-6);
+      content: '';
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: 95%;
+      z-index: -1;
+    }
+
+    span {
+      background: var(--primary-3);
+      padding: 0 15px;
+    }
   }
   .quest {
     display: grid;
@@ -47,27 +68,25 @@ const QuestContainer = () => {
     dispatch(getAllQuest());
   }, []);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (quest.length === 0) {
-    return (
-      <StyledQuestContainer>
-        <h2>No quests found</h2>
-        <GiHalfDead className="empty-icon" />
-      </StyledQuestContainer>
-    );
-  }
-
   return (
     <StyledQuestContainer>
-      <h5>Quest info</h5>
-      <div className="quest">
-        {quest.map((q) => {
-          return <SingleQuest key={q._id} {...q} />;
-        })}
-      </div>
+      <h4 className="line">
+        <span>Quest List</span>
+      </h4>
+      {isLoading ? (
+        <Loading />
+      ) : quest.length === 0 ? (
+        <StyledQuestContainer>
+          <h2>No quests found</h2>
+          <GiHalfDead className="empty-icon" />
+        </StyledQuestContainer>
+      ) : (
+        <div className="quest">
+          {quest.map((q) => {
+            return <SingleQuest key={q._id} {...q} />;
+          })}
+        </div>
+      )}
     </StyledQuestContainer>
   );
 };

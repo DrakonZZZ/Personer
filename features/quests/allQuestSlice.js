@@ -38,7 +38,6 @@ export const displayStats = createAsyncThunk(
   async (noparam, thunkPoint) => {
     try {
       const res = await endPoint.get('/jobs/stats');
-      console.log(res.data);
       return res.data;
     } catch (error) {
       return thunkPoint.rejectWithValue(error.response.data.msg);
@@ -52,6 +51,12 @@ const allQuestSlice = createSlice({
   reducers: {
     loadingDisplay: (state, tgl) => {
       state.isLoading = tgl;
+    },
+    changeHandler: (state, { payload: { name, value } }) => {
+      state[name] = value;
+    },
+    resetHandler: (state) => {
+      return { ...state, ...intialFilterState };
     },
   },
   extraReducers: {
@@ -82,5 +87,6 @@ const allQuestSlice = createSlice({
   },
 });
 
-export const { loadingDisplay } = allQuestSlice.actions;
+export const { loadingDisplay, changeHandler, resetHandler } =
+  allQuestSlice.actions;
 export default allQuestSlice.reducer;
