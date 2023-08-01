@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import SingleQuest from './SingleQuest';
+import Loading from './Loading';
 import { useSelector, useDispatch } from 'react-redux';
 import { styled } from 'styled-components';
 import { getAllQuest } from '../../features/quests/allQuestSlice';
@@ -47,12 +48,7 @@ const QuestContainer = () => {
   }, []);
 
   if (isLoading) {
-    return (
-      <div className="lds-ripple">
-        <div></div>
-        <div></div>
-      </div>
-    );
+    return <Loading />;
   }
 
   if (quest.length === 0) {

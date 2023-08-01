@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import endPoint from '../../utils/axios';
 import { toast } from 'react-toastify';
-import axios from 'axios';
 
 const intialFilterState = {
   search: '',
@@ -25,11 +24,7 @@ export const getAllQuest = createAsyncThunk(
   'allJobs/getJobs',
   async (noparam, thunkPoint) => {
     try {
-      const res = await endPoint.get('/jobs', {
-        headers: {
-          Authorization: `Bearer ${thunkPoint.getState().user.userInfo.token}`,
-        },
-      });
+      const res = await endPoint.get('/jobs');
 
       return res.data;
     } catch (error) {
@@ -38,8 +33,21 @@ export const getAllQuest = createAsyncThunk(
   }
 );
 
+export const displayStats = createAsyncThunk(
+  'allJobs/showStats',
+  async (noparam, thunkPoint) => {
+    try {
+      const res = await endPoint.get('/jobs/stats');
+      console.log(res.data);
+      return res.data;
+    } catch (error) {
+      return thunkPoint.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const allQuestSlice = createSlice({
-  name: 'allQUest',
+  name: 'allQuest',
   initialState,
   reducers: {
     loadingDisplay: (state, tgl) => {
@@ -58,6 +66,18 @@ const allQuestSlice = createSlice({
     [getAllQuest.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast(payload);
+    },
+    [displayStats.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [displayStats.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.stats = payload.defaultStats;
+      state.monthlyQuestRegistration = payload.monthlyApplications;
+    },
+    [displayStats.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      toast.error(payload);
     },
   },
 });

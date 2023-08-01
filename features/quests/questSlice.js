@@ -54,7 +54,7 @@ const questSlice = createSlice({
       state.isLoading = false;
       toast.error(payload);
     },
-    [deleteQuest.fulfilled]: (state) => {
+    [deleteQuest.fulfilled]: () => {
       toast.success('Quest deleted');
     },
     [deleteQuest.rejected]: (state, { payload }) => {

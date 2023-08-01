@@ -7,6 +7,10 @@ import Nav from './Nav';
 import Navlinks from './Navlinks';
 import QuestContainer from './QuestContainer';
 import SearchContainer from './SearchContainer';
+import Loading from './Loading';
+import GraphContainer from './GraphContainer';
+import StatsContainer from './StatsContainer';
+import Chart from './Chart';
 
 export {
   Logo,
@@ -18,4 +22,8 @@ export {
   Navlinks,
   QuestContainer,
   SearchContainer,
+  Loading,
+  StatsContainer,
+  GraphContainer,
+  Chart,
 };

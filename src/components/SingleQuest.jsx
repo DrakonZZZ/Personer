@@ -52,15 +52,15 @@ const StyledSingleQuest = styled.div`
   }
   .pending {
     background: #171717;
-    color: #ffcf5e;
+    color: #ff8f45;
   }
   .interview {
     background: #171717;
-    color: #5aff78;
+    color: #07d2be;
   }
   .declined {
     background: #171717;
-    color: #ff4545;
+    color: #f24e70;
   }
   .content {
     padding: 1rem 1.5rem;
