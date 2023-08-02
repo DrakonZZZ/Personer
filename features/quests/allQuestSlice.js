@@ -52,33 +52,34 @@ const allQuestSlice = createSlice({
       return initialState;
     },
   },
-  extraReducers: {
-    [getAllQuest.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [getAllQuest.fulfilled]: (state, { payload }) => {
-      state.isLoading = false;
-      const { jobs, numOfPages, totalJobs } = payload;
-      state.quest = jobs;
-      state.totalPages = numOfPages;
-      state.totalQuest = totalJobs;
-    },
-    [getAllQuest.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast(payload);
-    },
-    [displayStats.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [displayStats.fulfilled]: (state, { payload }) => {
-      state.isLoading = false;
-      state.stats = payload.defaultStats;
-      state.monthlyQuestRegistration = payload.monthlyApplications;
-    },
-    [displayStats.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast.error(payload);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(getAllQuest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getAllQuest.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        const { jobs, numOfPages, totalJobs } = payload;
+        state.quest = jobs;
+        state.totalPages = numOfPages;
+        state.totalQuest = totalJobs;
+      })
+      .addCase(getAllQuest.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      })
+      .addCase(displayStats.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(displayStats.fulfilled, (state, { payload }) => {
+        state.isLoading = false;
+        state.stats = payload.defaultStats;
+        state.monthlyQuestRegistration = payload.monthlyApplications;
+      })
+      .addCase(displayStats.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      });
   },
 });
 

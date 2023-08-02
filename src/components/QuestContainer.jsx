@@ -71,13 +71,13 @@ const QuestContainer = () => {
     search,
     searchStatus,
     searchType,
-    sortType,
+    sort,
   } = useSelector((store) => store.allQuest);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllQuest());
-  }, [page, search, searchStatus, searchType, sortType]);
+  }, [page, search, searchStatus, searchType, sort]);
 
   return (
     <StyledQuestContainer>

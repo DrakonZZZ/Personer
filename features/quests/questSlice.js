@@ -42,35 +42,36 @@ const questSlice = createSlice({
       return { ...state, isEditing: true, ...payload };
     },
   },
-  extraReducers: {
-    [addQuest.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [addQuest.fulfilled]: (state) => {
-      state.isLoading = false;
-      toast.success('Quest Created!');
-    },
-    [addQuest.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast.error(payload);
-    },
-    [deleteQuest.fulfilled]: () => {
-      toast.success('Quest deleted');
-    },
-    [deleteQuest.rejected]: (state, { payload }) => {
-      toast(payload);
-    },
-    [editQuestData.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [editQuestData.fulfilled]: (state) => {
-      state.isLoading = false;
-      toast.success('Quest Updated!');
-    },
-    [editQuestData.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast.error(payload);
-    },
+  extraReducers: (builder) => {
+    builder
+      .addCase(addQuest.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addQuest.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Quest Created!');
+      })
+      .addCase(addQuest.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      })
+      .addCase(deleteQuest.fulfilled, () => {
+        toast.success('Quest deleted');
+      })
+      .addCase(deleteQuest.rejected, (state, { payload }) => {
+        toast(payload);
+      })
+      .addCase(editQuestData.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(editQuestData.fulfilled, (state) => {
+        state.isLoading = false;
+        toast.success('Quest Updated!');
+      })
+      .addCase(editQuestData.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast.error(payload);
+      });
   },
 });
 

@@ -1,5 +1,5 @@
 import endPoint from '../../utils/axios';
-import { logout } from './userSlice';
+import { logout, storeReset } from './userSlice';
 import { clearQuestState } from '../quests/allQuestSlice';
 import { clearStateValue } from '../quests/questSlice';
 
@@ -8,7 +8,7 @@ export const registerUserThunk = async (user, thunkPoint) => {
     const res = await endPoint.post('/auth/register', user);
     return res.data;
   } catch (error) {
-    return thunkPoint.rejectWithValue(error.response.data.msg);
+    return unauthorizedResponse(error, thunkPoint);
   }
 };
 
@@ -17,7 +17,7 @@ export const loginUserThunk = async (user, thunkPoint) => {
     const res = await endPoint.post('/auth/login', user);
     return res.data;
   } catch (error) {
-    return thunkPoint.rejectWithValue(error.response.data.msg);
+    return unauthorizedResponse(error, thunkPoint);
   }
 };
 
@@ -29,7 +29,7 @@ export const updateUserThunk = async (user, thunkPoint) => {
     if (error.response.status == 401) {
       thunkPoint.dispatch(logout());
     }
-    return thunkPoint.rejectWithValue(error.response.data.msg);
+    return unauthorizedResponse(error, thunkPoint);
   }
 };
 
@@ -42,4 +42,14 @@ export const resetStoreDataThunk = async (msg, thunkPoint) => {
   } catch (error) {
     return Promise.reject();
   }
+};
+
+export const unauthorizedResponse = (error, thunkPoint) => {
+  if (error.response.status === 401) {
+    thunkPoint.dispatch(storeReset());
+    return thunkPoint.rejectWithValue(
+      'You are not authorized to use this account'
+    );
+  }
+  return thunkPoint.rejectWithValue(error.response.data.msg);
 };

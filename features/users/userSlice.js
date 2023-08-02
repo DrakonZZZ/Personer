@@ -10,6 +10,7 @@ import {
   registerUserThunk,
   updateUserThunk,
   resetStoreDataThunk,
+  unauthorizedResponse,
 } from './userAction';
 
 const initialState = {
@@ -48,53 +49,54 @@ const userSlice = createSlice({
       clearFromSession();
     },
   },
-  extraReducers: {
-    [registerUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [registerUser.fulfilled]: (state, { payload }) => {
-      const { user } = payload;
-      state.isLoading = false;
-      state.userInfo = user;
-      addDataToSession(user);
-      toast.success(`Hello there, ${user.name}`);
-    },
-    [registerUser.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast(payload);
-    },
-    [loginUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [loginUser.fulfilled]: (state, { payload }) => {
-      const { user } = payload;
-      state.isLoading = false;
-      state.userInfo = user;
-      addDataToSession(user);
-      toast.success(`Welcome back 🙂, ${user.name}`);
-    },
-    [loginUser.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast(payload);
-    },
-    [updateUser.pending]: (state) => {
-      state.isLoading = true;
-    },
-    [updateUser.fulfilled]: (state, { payload }) => {
-      const { user } = payload;
-      state.isLoading = false;
-      state.user = user;
+  extraReducers: (builder) => {
+    builder
+      .addCase(registerUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(registerUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.userInfo = user;
+        addDataToSession(user);
+        toast.success(`Hello there, ${user.name}`);
+      })
+      .addCase(registerUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.userInfo = user;
+        addDataToSession(user);
+        toast.success(`Welcome back 🙂, ${user.name}`);
+      })
+      .addCase(loginUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, { payload }) => {
+        const { user } = payload;
+        state.isLoading = false;
+        state.user = user;
 
-      addDataToSession(user);
-      toast.success('Your Profile has been updated!');
-    },
-    [updateUser.rejected]: (state, { payload }) => {
-      state.isLoading = false;
-      toast(payload);
-    },
-    [storeReset.rejected]: () => {
-      toast('Something went wrong');
-    },
+        addDataToSession(user);
+        toast.success('Your Profile has been updated!');
+      })
+      .addCase(updateUser.rejected, (state, { payload }) => {
+        state.isLoading = false;
+        toast(payload);
+      })
+      .addCase(storeReset.rejected, () => {
+        toast('Something went wrong');
+      });
   },
 });
 
