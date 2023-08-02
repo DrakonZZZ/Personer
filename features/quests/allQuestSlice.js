@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import endPoint from '../../utils/axios';
 import { toast } from 'react-toastify';
+import { displayStatThunk, getAllQuestThunk } from './allQuestActions';
 
 const intialFilterState = {
   search: '',
@@ -15,6 +15,7 @@ const initialState = {
   quest: [],
   totalQuest: 0,
   totalPages: 1,
+  page: 1,
   stats: {},
   monthlyQuestRegistration: [],
   ...intialFilterState,
@@ -22,27 +23,12 @@ const initialState = {
 
 export const getAllQuest = createAsyncThunk(
   'allJobs/getJobs',
-  async (noparam, thunkPoint) => {
-    try {
-      const res = await endPoint.get('/jobs');
-
-      return res.data;
-    } catch (error) {
-      return thunkPoint.rejectWithValue(error.response.data.msg);
-    }
-  }
+  getAllQuestThunk
 );
 
 export const displayStats = createAsyncThunk(
   'allJobs/showStats',
-  async (noparam, thunkPoint) => {
-    try {
-      const res = await endPoint.get('/jobs/stats');
-      return res.data;
-    } catch (error) {
-      return thunkPoint.rejectWithValue(error.response.data.msg);
-    }
-  }
+  displayStatThunk
 );
 
 const allQuestSlice = createSlice({
@@ -53,10 +39,17 @@ const allQuestSlice = createSlice({
       state.isLoading = tgl;
     },
     changeHandler: (state, { payload: { name, value } }) => {
+      state.page = 1;
       state[name] = value;
     },
     resetHandler: (state) => {
       return { ...state, ...intialFilterState };
+    },
+    pageNavigation: (state, { payload }) => {
+      state.page = payload;
+    },
+    clearQuestState: () => {
+      return initialState;
     },
   },
   extraReducers: {
@@ -65,8 +58,10 @@ const allQuestSlice = createSlice({
     },
     [getAllQuest.fulfilled]: (state, { payload }) => {
       state.isLoading = false;
-      const { jobs } = payload;
+      const { jobs, numOfPages, totalJobs } = payload;
       state.quest = jobs;
+      state.totalPages = numOfPages;
+      state.totalQuest = totalJobs;
     },
     [getAllQuest.rejected]: (state, { payload }) => {
       state.isLoading = false;
@@ -87,6 +82,11 @@ const allQuestSlice = createSlice({
   },
 });
 
-export const { loadingDisplay, changeHandler, resetHandler } =
-  allQuestSlice.actions;
+export const {
+  loadingDisplay,
+  changeHandler,
+  clearQuestState,
+  resetHandler,
+  pageNavigation,
+} = allQuestSlice.actions;
 export default allQuestSlice.reducer;

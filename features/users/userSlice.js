@@ -9,6 +9,7 @@ import {
   loginUserThunk,
   registerUserThunk,
   updateUserThunk,
+  resetStoreDataThunk,
 } from './userAction';
 
 const initialState = {
@@ -19,23 +20,16 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
-  async (user, thunkPoint) => {
-    return registerUserThunk(user, thunkPoint);
-  }
+  registerUserThunk
 );
 
-export const loginUser = createAsyncThunk(
-  'user/loginUser',
-  async (user, thunkPoint) => {
-    return loginUserThunk(user, thunkPoint);
-  }
-);
+export const loginUser = createAsyncThunk('user/loginUser', loginUserThunk);
 
-export const updateUser = createAsyncThunk(
-  'user/updateUser',
-  async (user, thunkPoint) => {
-    return updateUserThunk(user, thunkPoint);
-  }
+export const updateUser = createAsyncThunk('user/updateUser', updateUserThunk);
+
+export const storeReset = createAsyncThunk(
+  'user/clearStore',
+  resetStoreDataThunk
 );
 
 const userSlice = createSlice({
@@ -97,6 +91,9 @@ const userSlice = createSlice({
     [updateUser.rejected]: (state, { payload }) => {
       state.isLoading = false;
       toast(payload);
+    },
+    [storeReset.rejected]: () => {
+      toast('Something went wrong');
     },
   },
 });

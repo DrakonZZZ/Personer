@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { styled } from 'styled-components';
 import { getAllQuest } from '../../features/quests/allQuestSlice';
 import { GiHalfDead } from 'react-icons/gi';
+import ResponsivePageContainer from './ResponsivePageContainer';
 
 const StyledQuestContainer = styled.section`
   margin-top: 4rem;
@@ -61,12 +62,22 @@ const StyledQuestContainer = styled.section`
 `;
 
 const QuestContainer = () => {
-  const { quest, isLoading } = useSelector((store) => store.allQuest);
+  const {
+    quest,
+    isLoading,
+    totalQuest,
+    totalPages,
+    page,
+    search,
+    searchStatus,
+    searchType,
+    sortType,
+  } = useSelector((store) => store.allQuest);
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getAllQuest());
-  }, []);
+  }, [page, search, searchStatus, searchType, sortType]);
 
   return (
     <StyledQuestContainer>
@@ -87,6 +98,7 @@ const QuestContainer = () => {
           })}
         </div>
       )}
+      <ResponsivePageContainer />
     </StyledQuestContainer>
   );
 };

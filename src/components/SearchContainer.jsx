@@ -79,6 +79,9 @@ const SearchContainer = () => {
   const dispatch = useDispatch();
 
   const searchHandler = (e) => {
+    if (isloading) {
+      return;
+    }
     dispatch(changeHandler({ name: e.target.name, value: e.target.value }));
   };
 

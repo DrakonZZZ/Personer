@@ -2,7 +2,7 @@ import { FaAlignJustify, FaUserCircle } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import Logo from './Logo';
 import { useState } from 'react';
-import { toggleSidebar, logout } from '../../features/users/userSlice';
+import { toggleSidebar, storeReset } from '../../features/users/userSlice';
 import { styled } from 'styled-components';
 
 const StyledNav = styled.nav`
@@ -126,7 +126,7 @@ const Nav = () => {
               type="button"
               className="dropdown-btn"
               onClick={() =>
-                dispatch(logout(`Logging you out ${userInfo?.name}`))
+                dispatch(storeReset(`Logging you out ${userInfo?.name}`))
               }
             >
               Logout

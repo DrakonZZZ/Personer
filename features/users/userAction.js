@@ -1,5 +1,7 @@
 import endPoint from '../../utils/axios';
 import { logout } from './userSlice';
+import { clearQuestState } from '../quests/allQuestSlice';
+import { clearStateValue } from '../quests/questSlice';
 
 export const registerUserThunk = async (user, thunkPoint) => {
   try {
@@ -28,5 +30,16 @@ export const updateUserThunk = async (user, thunkPoint) => {
       thunkPoint.dispatch(logout());
     }
     return thunkPoint.rejectWithValue(error.response.data.msg);
+  }
+};
+
+export const resetStoreDataThunk = async (msg, thunkPoint) => {
+  try {
+    thunkPoint.dispatch(logout(msg));
+    thunkPoint.dispatch(clearQuestState());
+    thunkPoint.dispatch(clearStateValue());
+    return Promise.resolve();
+  } catch (error) {
+    return Promise.reject();
   }
 };
