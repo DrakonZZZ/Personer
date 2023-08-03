@@ -10,7 +10,6 @@ import {
   registerUserThunk,
   updateUserThunk,
   resetStoreDataThunk,
-  unauthorizedResponse,
 } from './userAction';
 
 const initialState = {
